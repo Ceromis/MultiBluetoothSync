@@ -1,0 +1,12 @@
+E:\zhuomian\music_pro\MultiBluetoothSync\publish\MultiBluetoothSync.exe
+E:\zhuomian\music_pro\MultiBluetoothSync\publish\MultiBluetoothSync.dll
+E:\zhuomian\music_pro\MultiBluetoothSync\publish\MultiBluetoothSync.deps.json
+E:\zhuomian\music_pro\MultiBluetoothSync\publish\MultiBluetoothSync.runtimeconfig.json
+E:\zhuomian\music_pro\MultiBluetoothSync\publish\MultiBluetoothSync.pdb
+E:\zhuomian\music_pro\MultiBluetoothSync\publish\NAudio.dll
+E:\zhuomian\music_pro\MultiBluetoothSync\publish\NAudio.Asio.dll
+E:\zhuomian\music_pro\MultiBluetoothSync\publish\NAudio.Core.dll
+E:\zhuomian\music_pro\MultiBluetoothSync\publish\NAudio.Midi.dll
+E:\zhuomian\music_pro\MultiBluetoothSync\publish\NAudio.Wasapi.dll
+E:\zhuomian\music_pro\MultiBluetoothSync\publish\NAudio.WinForms.dll
+E:\zhuomian\music_pro\MultiBluetoothSync\publish\NAudio.WinMM.dll

@@ -1,0 +1,194 @@
+<Window x:Class="MultiBluetoothSync.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MultiBluetoothSync - 多蓝牙耳机协同" 
+        Height="620" Width="520"
+        MinHeight="500" MinWidth="480"
+        WindowStartupLocation="CenterScreen"
+        Background="#F8FAFC"
+        Closing="Window_Closing"
+        Loaded="Window_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2563EB" Padding="16">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock FontSize="20" FontWeight="Bold" Foreground="White">
+                        <Run Text="MultiBluetoothSync"/>
+                        <Run Text="  v1.0(2607261)" FontSize="12" Foreground="#93C5FD"/>
+                    </TextBlock>
+                    <TextBlock Text="将两个蓝牙耳机组合为双通道立体声" FontSize="12" Foreground="#BFDBFE" Margin="0,4,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <TextBlock Text="作者: Ceromis" FontSize="14" FontWeight="Bold" Foreground="White" HorizontalAlignment="Right"/>
+                    <TextBlock FontSize="11" Foreground="#BFDBFE" HorizontalAlignment="Right" Margin="0,2,0,0">
+                        <Hyperlink NavigateUri="https://qm.qq.com/q/28bdmeWcVa" RequestNavigate="Hyperlink_RequestNavigate">
+                            <Run Text="QQ群: 881069902 (Ceromis研究院)" Foreground="#93C5FD"/>
+                        </Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="16">
+            <StackPanel>
+                <!-- VB-Audio Status -->
+                <Border Background="White" CornerRadius="8" Padding="16" Margin="0,0,0,12"
+                        BorderBrush="#E2E8F0" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="虚拟音频设备" FontSize="14" FontWeight="SemiBold" Foreground="#1E293B"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <Ellipse x:Name="VbStatusDot" Width="10" Height="10" Fill="#EF4444" Margin="0,0,8,0"/>
+                            <TextBlock x:Name="VbStatusText" Text="未检测到 VB-Audio Virtual Cable" 
+                                       Foreground="#64748B" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Button x:Name="BtnInstallVB" Content="下载安装 VB-Audio Virtual Cable" 
+                                Style="{StaticResource SecondaryButton}" 
+                                Margin="0,8,0,0" Click="BtnInstallVB_Click"
+                                Visibility="Collapsed"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Left Ear Selection -->
+                <Border Background="White" CornerRadius="8" Padding="16" Margin="0,0,0,12"
+                        BorderBrush="#E2E8F0" BorderThickness="1">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="#DBEAFE" CornerRadius="10" Width="24" Height="24" Margin="0,0,8,0">
+                                <TextBlock Text="L" FontSize="12" FontWeight="Bold" Foreground="#2563EB"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="左耳设备" FontSize="14" FontWeight="SemiBold" Foreground="#1E293B"/>
+                        </StackPanel>
+                        <ComboBox x:Name="CmbLeftDevice" Margin="0,10,0,0" FontSize="13" Height="36"
+                                  SelectionChanged="CmbLeftDevice_SelectionChanged"/>
+                        <!-- Volume: Grid so Slider stretches -->
+                        <Grid Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="36"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="44"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="音量" Foreground="#64748B" VerticalAlignment="Center"/>
+                            <Slider Grid.Column="1" x:Name="SliderLeftVolume" Minimum="0" Maximum="1" Value="1"
+                                    VerticalAlignment="Center"
+                                    ValueChanged="SliderLeftVolume_ValueChanged"/>
+                            <TextBlock Grid.Column="2" x:Name="TxtLeftVolume" Text="100%" Foreground="#64748B" 
+                                       VerticalAlignment="Center" TextAlignment="Right"/>
+                        </Grid>
+                        <ProgressBar x:Name="LevelLeft" Height="4" Margin="0,4,0,0" 
+                                     Foreground="#2563EB" Background="#E2E8F0" Maximum="1"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Right Ear Selection -->
+                <Border Background="White" CornerRadius="8" Padding="16" Margin="0,0,0,12"
+                        BorderBrush="#E2E8F0" BorderThickness="1">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="#FEE2E2" CornerRadius="10" Width="24" Height="24" Margin="0,0,8,0">
+                                <TextBlock Text="R" FontSize="12" FontWeight="Bold" Foreground="#DC2626"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="右耳设备" FontSize="14" FontWeight="SemiBold" Foreground="#1E293B"/>
+                        </StackPanel>
+                        <ComboBox x:Name="CmbRightDevice" Margin="0,10,0,0" FontSize="13" Height="36"
+                                  SelectionChanged="CmbRightDevice_SelectionChanged"/>
+                        <!-- Volume: Grid so Slider stretches -->
+                        <Grid Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="36"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="44"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="音量" Foreground="#64748B" VerticalAlignment="Center"/>
+                            <Slider Grid.Column="1" x:Name="SliderRightVolume" Minimum="0" Maximum="1" Value="1"
+                                    VerticalAlignment="Center"
+                                    ValueChanged="SliderRightVolume_ValueChanged"/>
+                            <TextBlock Grid.Column="2" x:Name="TxtRightVolume" Text="100%" Foreground="#64748B" 
+                                       VerticalAlignment="Center" TextAlignment="Right"/>
+                        </Grid>
+                        <ProgressBar x:Name="LevelRight" Height="4" Margin="0,4,0,0"
+                                     Foreground="#DC2626" Background="#E2E8F0" Maximum="1"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Sync Offset -->
+                <Border Background="White" CornerRadius="8" Padding="16" Margin="0,0,0,12"
+                        BorderBrush="#E2E8F0" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="同步偏移" FontSize="14" FontWeight="SemiBold" Foreground="#1E293B"/>
+                        <TextBlock Text="居中=0，往左拖=延迟左耳，往右拖=延迟右耳" 
+                                   FontSize="12" Foreground="#94A3B8" Margin="0,4,0,8"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="36"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="60"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="左耳" Foreground="#64748B" VerticalAlignment="Center"/>
+                            <Slider Grid.Column="1" x:Name="SliderSyncOffset" Minimum="-500" Maximum="500" Value="0"
+                                    VerticalAlignment="Center" IsSnapToTickEnabled="True" TickFrequency="5"
+                                    ValueChanged="SliderSyncOffset_ValueChanged"/>
+                            <TextBlock Grid.Column="2" x:Name="TxtSyncOffset" Text="0ms" Foreground="#64748B" 
+                                       VerticalAlignment="Center" TextAlignment="Right"/>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                            <TextBlock Text="← 延迟左耳" FontSize="10" Foreground="#94A3B8"/>
+                            <TextBlock Text="延迟右耳 →" FontSize="10" Foreground="#94A3B8" HorizontalAlignment="Right" Width="70"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- How to use -->
+                <Border Background="#FFFBEB" CornerRadius="8" Padding="16" Margin="0,0,0,12"
+                        BorderBrush="#FDE68A" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="使用说明" FontSize="13" FontWeight="SemiBold" Foreground="#92400E"/>
+                        <TextBlock x:Name="TxtInstructions" TextWrapping="Wrap" Foreground="#A16207" FontSize="12" Margin="0,6,0,0"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Control Bar -->
+        <Border Grid.Row="2" Background="White" Padding="16" BorderBrush="#E2E8F0" BorderThickness="0,1,0,0">
+            <StackPanel>
+                <Button x:Name="BtnRoute" Content="开始路由" 
+                        Style="{StaticResource PrimaryButton}" 
+                        Height="42" Click="BtnRoute_Click"/>
+                <TextBlock x:Name="TxtStatus" Text="就绪" Foreground="#64748B" 
+                           FontSize="12" Margin="0,8,0,0" TextAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Settings Bar -->
+        <Border Grid.Row="3" Background="#F1F5F9" Padding="12,8" BorderBrush="#E2E8F0" BorderThickness="0,1,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <CheckBox x:Name="ChkAutoStart" Content="开机自动启动" 
+                              VerticalAlignment="Center" Checked="ChkAutoStart_Changed" 
+                              Unchecked="ChkAutoStart_Changed"/>
+                </StackPanel>
+                <Button Grid.Column="1" Content="刷新设备" Style="{StaticResource SecondaryButton}"
+                        Padding="10,4" FontSize="12" Click="BtnRefresh_Click"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
